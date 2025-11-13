@@ -65,7 +65,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float halfLength = width / 2;
         var next = rb.position + Vector2.right * (xInput * speed * Time.fixedDeltaTime);
 
         // ここでクランプ（中心 + 半幅 が画面外に出ないように）
