@@ -4,6 +4,9 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+
+    public static Player Instance { get; private set; }
+
     [SerializeField] private float speed = 10f;
     [SerializeField] private float xInput = 0;
     [SerializeField] private float leftLimit;
@@ -22,28 +25,14 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         rb = GetComponent<Rigidbody2D>();
         co = GetComponent<BoxCollider2D>();
-        cam = Camera.main;
 
-        // 画面の左下(0,0)と右上(1,1)をワールド座標に変換できる 
-        bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
-        topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+        SetScreenLength();
 
-        // 画面の左端のx, 右端のxを取得できたので、パドルがはみ出さないように半幅ぶんだけ内側にオフセット
-        worldLeft = bottomLeft.x;
-        worldRight = topRight.x;
-
-        // 開始時にInspectorで横幅を決められるようにする
-        // 現在のScale値を取得(transformはVector3なので、これで保管）
-        Vector3 scale = transform.localScale;
-        scale.x = width;
-        transform.localScale = scale; // gameObjectへ反映
-    }
-
-    private void Start()
-    {
-
+        ChangeWidth(width);
     }
 
     private void Update()
@@ -52,15 +41,6 @@ public class Player : MonoBehaviour
         xInput = 0f;
         if (Input.GetKey(KeyCode.A)) xInput = -1f;
         if (Input.GetKey(KeyCode.D)) xInput = 1f;
-
-        // パドルの長さを取得し、移動上限を割り当て
-        Vector3 scale = transform.localScale;
-        scale.x = width;
-        transform.localScale = scale;
-
-        halfWidth = co.bounds.extents.x;
-        leftLimit = worldLeft + halfWidth;
-        rightLimit = worldRight - halfWidth;
     }
 
     private void FixedUpdate()
@@ -72,4 +52,33 @@ public class Player : MonoBehaviour
 
         rb.MovePosition(next);
     }
+
+    private void SetScreenLength()
+    {
+        cam = Camera.main;
+
+        // 画面の左下(0,0)と右上(1,1)をワールド座標に変換できる 
+        bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+        topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+
+        // 画面の左端のx, 右端のxを取得できたので、パドルがはみ出さないように半幅ぶんだけ内側にオフセット
+        worldLeft = bottomLeft.x;
+        worldRight = topRight.x;
+    }
+
+    public void ChangeWidth(float width)
+    {
+        // 開始時にInspectorで横幅を決められるようにする
+        // 現在のScale値を取得(transformはVector3なので、これで保管）
+        Vector3 scale = transform.localScale;
+        scale.x = width;
+        transform.localScale = scale; // gameObjectへ反映
+
+        // パドルの長さを取得し、移動上限を割り当て
+        halfWidth = co.bounds.extents.x;
+        leftLimit = worldLeft + halfWidth;
+        rightLimit = worldRight - halfWidth;
+
+    }
+
 }
