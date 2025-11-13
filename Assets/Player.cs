@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -12,7 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float halfWidth;
 
     private Rigidbody2D rb;
-    private BoxCollider2D co;
+    private BoxCollider2D bc;
     private Camera cam;
     private Vector3 bottomLeft;
     private Vector3 topRight;
@@ -24,7 +25,7 @@ public class Player : MonoBehaviour
         GameManager.Instance.RegisterPlayer(this);
 
         rb = GetComponent<Rigidbody2D>();
-        co = GetComponent<BoxCollider2D>();
+        bc = GetComponent<BoxCollider2D>();
 
         SetScreenLength();
 
@@ -71,10 +72,27 @@ public class Player : MonoBehaviour
         transform.localScale = scale; // gameObjectへ反映
 
         // パドルの長さを取得し、移動上限を割り当て
-        halfWidth = co.bounds.extents.x;
+        //halfWidth = bc.bounds.extents.x;
+        halfWidth = width / 2;
+        Debug.Log(halfWidth);
         leftLimit = worldLeft + halfWidth;
         rightLimit = worldRight - halfWidth;
 
     }
+
+    public void PowerUpWidthCo(float newWidth, float duration)
+    {
+        StartCoroutine(PowerUpWidth(newWidth, duration));
+    }
+
+    private IEnumerator PowerUpWidth(float newWidth, float duration)
+    {
+        float originalWidth = transform.localScale.x;
+
+        ChangeWidth(newWidth);
+        yield return new WaitForSeconds(duration); // 指定時間待って、
+        ChangeWidth(originalWidth); // 元の長さに戻す
+    }
+
 
 }
