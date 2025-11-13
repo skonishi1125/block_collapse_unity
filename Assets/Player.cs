@@ -26,19 +26,19 @@ public class Player : MonoBehaviour
         co = GetComponent<BoxCollider2D>();
         cam = Camera.main;
 
-        // ‰æ–Ê‚Ì¶‰º(0,0)‚Æ‰Eã(1,1)‚ğƒ[ƒ‹ƒhÀ•W‚É•ÏŠ·
+        // ç”»é¢ã®å·¦ä¸‹(0,0)ã¨å³ä¸Š(1,1)ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«å¤‰æ›ã§ãã‚‹ 
         bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
         topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
 
-        // ‰æ–Ê‚Ì¶’[‚Ìx, ‰E’[‚Ìx‚ğæ“¾‚Å‚«‚½‚Ì‚ÅAƒpƒhƒ‹‚ª‚Í‚İo‚³‚È‚¢‚æ‚¤‚É”¼•‚Ô‚ñ‚¾‚¯“à‘¤‚ÉƒIƒtƒZƒbƒg
+        // ç”»é¢ã®å·¦ç«¯ã®x, å³ç«¯ã®xã‚’å–å¾—ã§ããŸã®ã§ã€ãƒ‘ãƒ‰ãƒ«ãŒã¯ã¿å‡ºã•ãªã„ã‚ˆã†ã«åŠå¹…ã¶ã‚“ã ã‘å†…å´ã«ã‚ªãƒ•ã‚»ãƒƒãƒˆ
         worldLeft = bottomLeft.x;
         worldRight = topRight.x;
 
-        // ŠJn‚ÉInspector‚Å‰¡•‚ğŒˆ‚ß‚ç‚ê‚é‚æ‚¤‚É‚·‚é
-        // Œ»İ‚ÌScale’l‚ğæ“¾(transform‚ÍVector3‚È‚Ì‚ÅA‚±‚ê‚Å•ÛŠÇj
+        // é–‹å§‹æ™‚ã«Inspectorã§æ¨ªå¹…ã‚’æ±ºã‚ã‚‰ã‚Œã‚‹ã‚ˆã†ã«ã™ã‚‹
+        // ç¾åœ¨ã®Scaleå€¤ã‚’å–å¾—(transformã¯Vector3ãªã®ã§ã€ã“ã‚Œã§ä¿ç®¡ï¼‰
         Vector3 scale = transform.localScale;
         scale.x = width;
-        transform.localScale = scale; // gameObject‚Ö”½‰f
+        transform.localScale = scale; // gameObjectã¸åæ˜ 
     }
 
     private void Start()
@@ -48,12 +48,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        // “ü—Í‘Ò‚¿
+        // å…¥åŠ›å¾…ã¡
         xInput = 0f;
         if (Input.GetKey(KeyCode.A)) xInput = -1f;
         if (Input.GetKey(KeyCode.D)) xInput = 1f;
 
-        // ƒpƒhƒ‹‚Ì’·‚³‚ğæ“¾‚µAˆÚ“®ãŒÀ‚ğŠ„‚è“–‚Ä
+        // ãƒ‘ãƒ‰ãƒ«ã®é•·ã•ã‚’å–å¾—ã—ã€ç§»å‹•ä¸Šé™ã‚’å‰²ã‚Šå½“ã¦
         Vector3 scale = transform.localScale;
         scale.x = width;
         transform.localScale = scale;
@@ -67,7 +67,7 @@ public class Player : MonoBehaviour
     {
         var next = rb.position + Vector2.right * (xInput * speed * Time.fixedDeltaTime);
 
-        // ‚±‚±‚ÅƒNƒ‰ƒ“ƒvi’†S + ”¼• ‚ª‰æ–ÊŠO‚Éo‚È‚¢‚æ‚¤‚Éj
+        // ã“ã“ã§ã‚¯ãƒ©ãƒ³ãƒ—ï¼ˆä¸­å¿ƒ + åŠå¹… ãŒç”»é¢å¤–ã«å‡ºãªã„ã‚ˆã†ã«ï¼‰
         next.x = Mathf.Clamp(next.x, leftLimit, rightLimit);
 
         rb.MovePosition(next);
