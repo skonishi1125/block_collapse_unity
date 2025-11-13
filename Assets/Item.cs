@@ -7,7 +7,10 @@ public class Item : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("アイテム取得");
-        Player.Instance.ChangeWidth(newWidth);
+        var player = GameManager.Instance.Player;
+        if (player != null)
+            player.ChangeWidth(newWidth);
+
         Destroy(gameObject);
     }
 }

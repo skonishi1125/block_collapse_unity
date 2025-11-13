@@ -1,12 +1,8 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
-
-    public static Player Instance { get; private set; }
-
     [SerializeField] private float speed = 10f;
     [SerializeField] private float xInput = 0;
     [SerializeField] private float leftLimit;
@@ -25,7 +21,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        GameManager.Instance.RegisterPlayer(this);
 
         rb = GetComponent<Rigidbody2D>();
         co = GetComponent<BoxCollider2D>();
