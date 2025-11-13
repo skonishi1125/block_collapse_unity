@@ -1,31 +1,45 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
+    [Header("Paddle status")]
     [SerializeField] private float speed = 10f;
     [SerializeField] private float xInput = 0;
     [SerializeField] private float leftLimit;
     [SerializeField] private float rightLimit;
-
     [SerializeField] private float width;
     [SerializeField] private float halfWidth;
 
+    // アイテム関連
+    [Header("Origin Info")]
+    [SerializeField] private float originWidth;
+    [SerializeField] private Color originColor;
+
     private Rigidbody2D rb;
-    private BoxCollider2D bc;
+    private SpriteRenderer sr;
+
     private Camera cam;
     private Vector3 bottomLeft;
     private Vector3 topRight;
     private float worldLeft;
     private float worldRight;
 
+    private Coroutine powerUpWidthCo;
+
     private void Awake()
     {
         GameManager.Instance.RegisterPlayer(this);
 
         rb = GetComponent<Rigidbody2D>();
-        bc = GetComponent<BoxCollider2D>();
+        sr = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        originWidth = transform.localScale.x;
+        originColor = sr.color;
 
         SetScreenLength();
 
@@ -82,16 +96,34 @@ public class Player : MonoBehaviour
 
     public void PowerUpWidthCo(float newWidth, float duration)
     {
-        StartCoroutine(PowerUpWidth(newWidth, duration));
+        // 重複を防ぐ
+        if(powerUpWidthCo != null)
+            StopCoroutine(powerUpWidthCo);
+
+        powerUpWidthCo = StartCoroutine(PowerUpWidth(newWidth, duration));
     }
 
     private IEnumerator PowerUpWidth(float newWidth, float duration)
     {
-        float originalWidth = transform.localScale.x;
-
         ChangeWidth(newWidth);
-        yield return new WaitForSeconds(duration); // 指定時間待って、
-        ChangeWidth(originalWidth); // 元の長さに戻す
+
+        // --- 点滅処理 ---
+        float elapsed = 0f;
+        float blinkTime = 1f;
+        yield return new WaitForSeconds(duration - blinkTime);
+
+        while (elapsed < blinkTime)
+        {
+            sr.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            sr.color = Color.white;
+            yield return new WaitForSeconds(0.1f);
+            elapsed += 0.1f;
+        }
+        sr.color = originColor;
+
+        //yield return new WaitForSeconds(duration); // 指定時間待って、
+        ChangeWidth(originWidth); // 元の長さに戻す
     }
 
 

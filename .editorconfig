@@ -3,7 +3,8 @@ root = true
 
 # C# ファイル
 [*.cs]
-charset = utf-8
+charset = utf-8-bom
+trim_trailing_whitespace = true
 
 #### コア EditorConfig オプション ####
 
@@ -13,8 +14,8 @@ indent_style = space
 tab_width = 4
 
 # 改行設定
-end_of_line = crlf
-insert_final_newline = false
+end_of_line = lf
+insert_final_newline = true
 
 #### .NET コード アクション ####
 
