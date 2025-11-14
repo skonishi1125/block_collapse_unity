@@ -14,11 +14,19 @@ public class Ball : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    //private void Start()
+    //{
+    //    rb.linearVelocity = new Vector3(defaultSpeed, defaultSpeed, 0);
+    //}
+
+    public void Launch()
     {
         // ゲーム開始時の適当な初速（／）
+
         rb.linearVelocity = new Vector3(defaultSpeed, defaultSpeed, 0);
+
     }
+
 
     private void FixedUpdate()
     {
