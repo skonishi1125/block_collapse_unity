@@ -2,14 +2,56 @@
 
 public class Ball : MonoBehaviour
 {
-    [SerializeField] private float speed;
-
+    [SerializeField] private float defaultSpeed;
+    [SerializeField] private float minimumSpeed;
+    [SerializeField] private float maximumSpeed;
+    [SerializeField] private float minX; // 最低限の横方向成分
+    [SerializeField] private float minY; // 最低限の縦方向成分
     Rigidbody2D rb;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = new Vector3(speed * 0.5f, speed, 0);
+        // ゲーム開始時の適当な初速（／）
+        rb.linearVelocity = new Vector3(defaultSpeed, defaultSpeed, 0);
+    }
+
+    private void FixedUpdate()
+    {
+        Vector2 v = rb.linearVelocity;
+
+        // 最低速度チェック
+        // 負荷を考慮してv.magnitudeでなくsqlMagnitudeを使う
+        // 例えば(0.1, 0.1)なら、0.1² + 0.1²で0.02になる
+        float speedSqrMagnitude = v.sqrMagnitude;
+        if (speedSqrMagnitude < 0.01f)
+        {
+            Debug.Log("最低速度補正");
+            v = v.normalized * minimumSpeed;
+        }
+        // 最大速度チェック
+        // 例えば(5, 5)の時は、5² + 5² = 50になる
+        else if (speedSqrMagnitude > 100f)
+        {
+            Debug.Log("最高速度補正");
+            v = v.normalized * maximumSpeed;
+        }
+
+        // 浅すぎる跳ねの角度チェック
+        // 絶対値で最低のyと比較して、足りなければyに力を足してやる
+        if (Mathf.Abs(v.y) < minY)
+            v.y = Mathf.Sign(v.y) * minimumSpeed;
+
+        // 垂直すぎる跳ねの角度チェック
+        // 絶対値で最低のxと比較して、足りなければxに力を足してやる
+        if (Mathf.Abs(v.x) < minX)
+            v.x = Mathf.Sign(v.x) * minimumSpeed;
+
+        rb.linearVelocity = v;
     }
 
 }
