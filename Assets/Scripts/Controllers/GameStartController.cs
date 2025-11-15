@@ -7,6 +7,8 @@ public class GameStartController : MonoBehaviour
     [SerializeField] private Ball ball;
     [SerializeField] private TextMeshProUGUI countdown;
 
+    private bool hasShownClear = false;
+
     private Coroutine countdownCo;
 
     // 一度しか走らない処理なのでStopCoroutineチェックは不要だが、メモとして置いておく
@@ -40,6 +42,17 @@ public class GameStartController : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         countdown.gameObject.SetActive(false);
+    }
+
+    // FixedUpdateは物理に関する処理の際に使う感じなので、Update()で
+    private void Update()
+    {
+        if (!hasShownClear && GameManager.Instance.isGameClear)
+        {
+            hasShownClear = true;
+            countdown.text = "CLEAR!";
+            countdown.gameObject.SetActive(true);
+        }
     }
 
 

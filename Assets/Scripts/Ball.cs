@@ -12,6 +12,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private float minY; // 最低限の縦方向成分
 
     private bool isLaunched = false;
+    private bool isCleared = false;
 
 
     private void Awake()
@@ -65,6 +66,11 @@ public class Ball : MonoBehaviour
             v.x = Mathf.Sign(v.x) * minimumSpeed;
 
         rb.linearVelocity = v;
+    }
+
+    private void StopBall()
+    {
+        rb.linearVelocity = Vector2.zero;
     }
 
 }

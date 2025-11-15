@@ -4,6 +4,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
+    public int remainBlocks { get; private set; }
+
     public bool isGameStarted {  get; private set; }
     public bool isGameClear {  get; private set; }
     public bool isGameOver { get; private set; }
@@ -25,8 +27,31 @@ public class GameManager : MonoBehaviour
     // 登録はPlayer側のAwake()など、呼び出し側でやってもらう
     public void RegisterPlayer(Player player) => Player = player;
 
-    public void GameStart() => isGameStarted = true;
+    public void RegisterBlock()
+    {
+        remainBlocks++;
+    }
+
+    public void CollapseBlock()
+    {
+        remainBlocks--;
+        if (remainBlocks <= 0)
+        {
+            Debug.Log("CLEAR!");
+            GameClear();
+        }
+    }
+
+
+    public void GameStart()
+    {
+        Debug.Log($"ブロックの数: {remainBlocks} コ");
+        isGameStarted = true;
+    } 
+
+
     public void GameClear() => isGameClear = true;
+
     public void GameOver() => isGameOver = true;
 
 
