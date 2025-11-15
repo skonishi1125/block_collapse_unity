@@ -9,13 +9,13 @@ public class GameStartController : MonoBehaviour
 
     private Coroutine countdownCo;
 
-
+    // 一度しか走らない処理なのでStopCoroutineチェックは不要だが、メモとして置いておく
     private void Start()
     {
         if (countdownCo != null)
             StopCoroutine(countdownCo);
 
-        StartCoroutine(CountdownCo());
+        countdownCo = StartCoroutine(CountdownCo());
     }
 
     private IEnumerator CountdownCo()
@@ -32,13 +32,14 @@ public class GameStartController : MonoBehaviour
         }
 
         countdown.text = "GO!";
-        yield return new WaitForSeconds(0.5f);
-
-        countdown.gameObject.SetActive(false);
+        GameManager.Instance.GameStart();
 
         if (ball != null)
             ball.Launch();
 
+        yield return new WaitForSeconds(0.3f);
+
+        countdown.gameObject.SetActive(false);
     }
 
 

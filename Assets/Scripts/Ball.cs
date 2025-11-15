@@ -2,34 +2,39 @@
 
 public class Ball : MonoBehaviour
 {
+    private Rigidbody2D rb;
+
+    [Header("Move Adjustment")]
     [SerializeField] private float defaultSpeed;
     [SerializeField] private float minimumSpeed;
     [SerializeField] private float maximumSpeed;
     [SerializeField] private float minX; // 最低限の横方向成分
     [SerializeField] private float minY; // 最低限の縦方向成分
-    Rigidbody2D rb;
+
+    private bool isLaunched = false;
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    //private void Start()
-    //{
-    //    rb.linearVelocity = new Vector3(defaultSpeed, defaultSpeed, 0);
-    //}
-
     public void Launch()
     {
+        isLaunched = true;
+
         // ゲーム開始時の適当な初速（／）
-
         rb.linearVelocity = new Vector3(defaultSpeed, defaultSpeed, 0);
-
     }
 
 
     private void FixedUpdate()
     {
+        // スタート前の場合は止まっていてほしいので、補正をかけない
+        if (!isLaunched)
+            return;
+
+
         Vector2 v = rb.linearVelocity;
 
         // 最低速度チェック
