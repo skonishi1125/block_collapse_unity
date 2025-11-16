@@ -29,6 +29,8 @@ public class Item : MonoBehaviour
             if (player != null)
                 player.PowerUpWidthCo(newWidth, powerUpTime);
 
+            GameManager.Instance.RegisterItem();
+
             Destroy(gameObject);
 
         }

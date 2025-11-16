@@ -86,7 +86,7 @@ public class Ball : MonoBehaviour
         Vector3 v = cam.WorldToViewportPoint(transform.position);
 
         // それぞれの方向に対して、画面外に出たかどうかをチェック
-        if (v.y < -0.5f || v.x < -0.5f || v.y < 1.5f || v.x < 1.5f)
+        if (v.y < -0.5f)
         {
             Debug.Log("GameOver");
             hasGameOvered = true;

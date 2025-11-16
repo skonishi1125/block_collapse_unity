@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public Player Player { get; private set; }
     public int remainBlocks { get; private set; }
+    public int acquiredItems { get; private set; }
 
     // Inspectorで見たい場合は、{ get; private set; }を外す
     public bool isGameStarted { get; private set; }
@@ -47,10 +48,9 @@ public class GameManager : MonoBehaviour
     // 登録はPlayer側のAwake()など、呼び出し側でやってもらう
     public void RegisterPlayer(Player player) => Player = player;
 
-    public void RegisterBlock()
-    {
-        remainBlocks++;
-    }
+    public void RegisterBlock() => remainBlocks++;
+
+    public void RegisterItem() => acquiredItems++;
 
     public void CollapseBlock()
     {
