@@ -933,7 +933,7 @@ RectTransform:
   m_Children:
   - {fileID: 650156149}
   - {fileID: 1460311203}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 764091839}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1588,6 +1588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 781885428}
   countdown: {fileID: 650156150}
+  oneMorePlayButton: {fileID: 1460311202}
 --- !u!4 &764091839
 Transform:
   m_ObjectHideFlags: 0
@@ -1600,7 +1601,8 @@ Transform:
   m_LocalPosition: {x: 129.6054, y: 1051.8516, z: -5.7979507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 554937941}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &781885420
@@ -2892,7 +2894,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1460311203
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4637,6 +4639,5 @@ SceneRoots:
   - {fileID: 781885425}
   - {fileID: 1073909096}
   - {fileID: 1159375075}
-  - {fileID: 554937941}
   - {fileID: 1016921770}
   - {fileID: 764091839}

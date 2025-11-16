@@ -6,6 +6,7 @@ public class GameStartController : MonoBehaviour
 {
     [SerializeField] private Ball ball;
     [SerializeField] private TextMeshProUGUI countdown;
+    [SerializeField] private GameObject oneMorePlayButton;
 
     private bool hasShownClear = false;
 
@@ -52,6 +53,10 @@ public class GameStartController : MonoBehaviour
             hasShownClear = true;
             countdown.text = "CLEAR!";
             countdown.gameObject.SetActive(true);
+
+            // もう一度遊ぶボタンを出す
+            oneMorePlayButton.SetActive(true);
+
         }
     }
 
