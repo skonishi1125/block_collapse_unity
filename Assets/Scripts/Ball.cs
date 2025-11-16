@@ -4,12 +4,16 @@ public class Ball : MonoBehaviour
 {
     private Rigidbody2D rb;
 
+
     [Header("Move Adjustment")]
     [SerializeField] private float defaultSpeed;
     [SerializeField] private float minimumSpeed;
     [SerializeField] private float maximumSpeed;
     [SerializeField] private float minX; // 最低限の横方向成分
     [SerializeField] private float minY; // 最低限の縦方向成分
+
+    private bool hasGameOvered = false;
+
 
     private bool isLaunched = false;
 
@@ -33,6 +37,7 @@ public class Ball : MonoBehaviour
         if (!isLaunched || GameManager.Instance.isGameClear)
             return;
 
+        CheckGameOver();
 
         Vector2 v = rb.linearVelocity;
 
@@ -69,6 +74,22 @@ public class Ball : MonoBehaviour
     public void StopBall()
     {
         rb.linearVelocity = Vector2.zero;
+    }
+
+    private void CheckGameOver()
+    {
+        if (hasGameOvered)
+            return;
+
+        Vector3 v = GameManager.Instance.cam.WorldToViewportPoint(transform.position);
+
+        if (v.y < 0f)
+        {
+            Debug.Log("GameOver");
+            hasGameOvered = true;
+            GameManager.Instance.GameOver();
+        }
+
     }
 
 }

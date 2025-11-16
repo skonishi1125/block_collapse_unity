@@ -20,12 +20,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
-    private Camera cam;
-    private Vector3 bottomLeft;
-    private Vector3 topRight;
-    private float worldLeft;
-    private float worldRight;
-
     private Coroutine powerUpWidthCo;
 
     private void Awake()
@@ -40,8 +34,6 @@ public class Player : MonoBehaviour
     {
         originWidth = transform.localScale.x;
         originColor = sr.color;
-
-        SetScreenLength();
 
         ChangeWidth(width);
     }
@@ -63,19 +55,7 @@ public class Player : MonoBehaviour
 
         rb.MovePosition(next);
     }
-
-    private void SetScreenLength()
-    {
-        cam = Camera.main;
-
-        // 画面の左下(0,0)と右上(1,1)をワールド座標に変換できる 
-        bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
-        topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
-
-        // 画面の左端のx, 右端のxを取得できたので、パドルがはみ出さないように半幅ぶんだけ内側にオフセット
-        worldLeft = bottomLeft.x;
-        worldRight = topRight.x;
-    }
+    
 
     public void ChangeWidth(float width)
     {
@@ -89,8 +69,8 @@ public class Player : MonoBehaviour
         //halfWidth = bc.bounds.extents.x;
         halfWidth = width / 2;
         Debug.Log(halfWidth);
-        leftLimit = worldLeft + halfWidth;
-        rightLimit = worldRight - halfWidth;
+        leftLimit = GameManager.Instance.worldLeft + halfWidth;
+        rightLimit = GameManager.Instance.worldRight - halfWidth;
 
     }
 

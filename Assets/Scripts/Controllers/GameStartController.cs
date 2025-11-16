@@ -10,6 +10,7 @@ public class GameStartController : MonoBehaviour
     [SerializeField] private GameObject retryBtn;
 
     private bool hasShownClear = false;
+    private bool hasShownGameOver = false;
 
     private Coroutine countdownCo;
 
@@ -61,6 +62,19 @@ public class GameStartController : MonoBehaviour
             if (ball != null)
                 ball.StopBall();
 
+        }
+
+        if (! hasShownGameOver && GameManager.Instance.isGameOver)
+        {
+            hasShownGameOver = true;
+            countdown.text = "GAME OVER";
+            countdown.gameObject.SetActive(true);
+
+            // もう一度遊ぶボタンの表示
+            retryBtn.SetActive(true);
+
+            if (ball != null)
+                ball.StopBall();
         }
     }
 
