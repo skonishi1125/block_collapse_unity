@@ -37,7 +37,8 @@ public class Ball : MonoBehaviour
         if (!isLaunched || GameManager.Instance.isGameClear)
             return;
 
-        CheckGameOver();
+        if (CheckGameOver())
+            return;
 
         Vector2 v = rb.linearVelocity;
 
@@ -76,19 +77,25 @@ public class Ball : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
     }
 
-    private void CheckGameOver()
+    private bool CheckGameOver()
     {
         if (hasGameOvered)
-            return;
+            return true;
 
-        Vector3 v = GameManager.Instance.cam.WorldToViewportPoint(transform.position);
+        Camera cam = Camera.main;
+        Vector3 v = cam.WorldToViewportPoint(transform.position);
 
-        if (v.y < 0f)
+        // それぞれの方向に対して、画面外に出たかどうかをチェック
+        if (v.y < -0.5f || v.x < -0.5f || v.y < 1.5f || v.x < 1.5f)
         {
             Debug.Log("GameOver");
             hasGameOvered = true;
             GameManager.Instance.GameOver();
+            StopBall();
+            return true;
         }
+
+        return false;
 
     }
 

@@ -7,13 +7,6 @@ public class GameManager : MonoBehaviour
     public Player Player { get; private set; }
     public int remainBlocks { get; private set; }
 
-    [Header("Camera")]
-    public Camera cam;
-    [SerializeField] private Vector3 bottomLeft;
-    [SerializeField] private Vector3 topRight;
-    [SerializeField] public float worldLeft;
-    [SerializeField] public float worldRight;
-
     // Inspectorで見たい場合は、{ get; private set; }を外す
     public bool isGameStarted { get; private set; }
     public bool isGameClear { get; private set; }
@@ -34,7 +27,6 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         CheckGameManager();
-        SetScreenLength();
     }
 
     private void CheckGameManager()
@@ -69,20 +61,6 @@ public class GameManager : MonoBehaviour
             GameClear();
         }
     }
-
-    private void SetScreenLength()
-    {
-        cam = Camera.main;
-
-        // 画面の左下(0,0)と右上(1,1)をワールド座標に変換できる 
-        bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
-        topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
-
-        // 画面の左端のx, 右端のxを取得できたので、パドルがはみ出さないように半幅ぶんだけ内側にオフセット
-        worldLeft = bottomLeft.x;
-        worldRight = topRight.x;
-    }
-
 
     public void GameStart()
     {

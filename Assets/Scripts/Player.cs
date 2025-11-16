@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private Camera cam;
 
     private Coroutine powerUpWidthCo;
 
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        cam = Camera.main;
         originWidth = transform.localScale.x;
         originColor = sr.color;
 
@@ -69,8 +71,17 @@ public class Player : MonoBehaviour
         //halfWidth = bc.bounds.extents.x;
         halfWidth = width / 2;
         Debug.Log(halfWidth);
-        leftLimit = GameManager.Instance.worldLeft + halfWidth;
-        rightLimit = GameManager.Instance.worldRight - halfWidth;
+
+        // カメラ座標を参考に、左右の移動上限を再設定
+        // 画面のビューポート座標 左下(0,0)と右上(1,1) -> ワールド座標に変換
+        var bottomLeft = cam.ViewportToWorldPoint(new Vector3(0f, 0f, 0f));
+        var topRight = cam.ViewportToWorldPoint(new Vector3(1f, 1f, 0f));
+        // 画面の左端のx, 右端のxを取得できたので、パドルがはみ出さないように半幅ぶんだけ内側にオフセット
+        var worldLeft = bottomLeft.x;
+        var worldRight = topRight.x;
+
+        leftLimit = worldLeft + halfWidth;
+        rightLimit = worldRight - halfWidth;
 
     }
 
