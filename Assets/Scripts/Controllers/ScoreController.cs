@@ -40,7 +40,12 @@ public class ScoreController : MonoBehaviour
         float timeScore = defaultTimeScore - currentTime;
         float itemScore = defaultItemScore - (GameManager.Instance.acquiredItems * 50f);
 
-        float finalScore = timeScore + itemScore;
+        float finalScore = 0f;
+
+        if (GameManager.Instance.isGameOver)
+            finalScore = -300f;
+
+        finalScore += timeScore + itemScore;
 
         return finalScore;
     }
