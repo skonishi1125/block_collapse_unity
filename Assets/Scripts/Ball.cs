@@ -12,8 +12,6 @@ public class Ball : MonoBehaviour
     [SerializeField] private float minY; // 最低限の縦方向成分
 
     private bool isLaunched = false;
-    private bool isCleared = false;
-
 
     private void Awake()
     {
@@ -31,8 +29,8 @@ public class Ball : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // スタート前の場合は止まっていてほしいので、補正をかけない
-        if (!isLaunched)
+        // スタート前, クリア時は速度補正をかけない
+        if (!isLaunched || GameManager.Instance.isGameClear)
             return;
 
 
@@ -68,7 +66,7 @@ public class Ball : MonoBehaviour
         rb.linearVelocity = v;
     }
 
-    private void StopBall()
+    public void StopBall()
     {
         rb.linearVelocity = Vector2.zero;
     }

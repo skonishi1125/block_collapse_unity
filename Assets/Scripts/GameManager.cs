@@ -24,6 +24,18 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);// シーンをまたいで残したい場合は有効化
     }
 
+    // Debug時など、一時的にSceneを動作させたい場合にGameManagerが存在しない問題を防ぐ
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void AutoCreate()
+    {
+        if (Instance == null)
+        {
+            var prefab = Resources.Load<GameManager>("GameManager");
+            if (prefab != null)
+                Instantiate(prefab);
+        }
+    }
+
     // 登録はPlayer側のAwake()など、呼び出し側でやってもらう
     public void RegisterPlayer(Player player) => Player = player;
 

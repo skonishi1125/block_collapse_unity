@@ -48,14 +48,17 @@ public class GameStartController : MonoBehaviour
     // FixedUpdateは物理に関する処理の際に使う感じなので、Update()で
     private void Update()
     {
-        if (!hasShownClear && GameManager.Instance.isGameClear)
+        if (! hasShownClear && GameManager.Instance.isGameClear)
         {
             hasShownClear = true;
             countdown.text = "CLEAR!";
             countdown.gameObject.SetActive(true);
 
-            // もう一度遊ぶボタンを出す
+            // もう一度遊ぶボタンの表示
             oneMorePlayButton.SetActive(true);
+
+            if (ball != null)
+                ball.StopBall();
 
         }
     }
