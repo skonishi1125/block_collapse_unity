@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,18 @@ public class GameManager : MonoBehaviour
     public bool isGameStarted {  get; private set; }
     public bool isGameClear {  get; private set; }
     public bool isGameOver { get; private set; }
+
+    // Debug時など、一時的にSceneを動作させたい場合にGameManagerが存在しない問題を防ぐ
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void AutoCreate()
+    {
+        if (Instance != null)
+            return;
+
+        var go = new GameObject("GameManager");
+        go.AddComponent<GameManager>();
+
+    }
 
     private void Awake()
     {
@@ -24,17 +37,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);// シーンをまたいで残したい場合は有効化
     }
 
-    // Debug時など、一時的にSceneを動作させたい場合にGameManagerが存在しない問題を防ぐ
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void AutoCreate()
-    {
-        if (Instance == null)
-        {
-            var prefab = Resources.Load<GameManager>("GameManager");
-            if (prefab != null)
-                Instantiate(prefab);
-        }
-    }
 
     // 登録はPlayer側のAwake()など、呼び出し側でやってもらう
     public void RegisterPlayer(Player player) => Player = player;
@@ -61,10 +63,17 @@ public class GameManager : MonoBehaviour
         isGameStarted = true;
     } 
 
-
     public void GameClear() => isGameClear = true;
 
     public void GameOver() => isGameOver = true;
+
+    // クリア情報などを全てリセットする
+    public void ResetGameState()
+    {
+        isGameClear = false;
+        isGameStarted = false;
+        remainBlocks = 0;
+    }
 
 
 }

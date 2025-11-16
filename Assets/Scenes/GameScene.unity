@@ -274,7 +274,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &330108939
 Transform:
   m_ObjectHideFlags: 0
@@ -1426,7 +1426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &694565384
 Transform:
   m_ObjectHideFlags: 0
@@ -1588,7 +1588,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ball: {fileID: 781885428}
   countdown: {fileID: 650156150}
-  oneMorePlayButton: {fileID: 1460311202}
+  retryBtn: {fileID: 1460311202}
 --- !u!4 &764091839
 Transform:
   m_ObjectHideFlags: 0
@@ -1790,7 +1790,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &954813145
 Transform:
   m_ObjectHideFlags: 0
@@ -1909,7 +1909,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1027108583
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2889,7 +2889,7 @@ GameObject:
   - component: {fileID: 1460311205}
   - component: {fileID: 1460311204}
   m_Layer: 5
-  m_Name: OneMorePlayButton
+  m_Name: Retry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2958,7 +2958,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1460311205}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 764091838}
+        m_TargetAssemblyTypeName: GameStartController, Assembly-CSharp
+        m_MethodName: OnClickRetry
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1460311205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3149,7 +3161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1518955000
 Transform:
   m_ObjectHideFlags: 0
@@ -3298,7 +3310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1535290345
 Transform:
   m_ObjectHideFlags: 0
@@ -4472,7 +4484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2029539618
 Transform:
   m_ObjectHideFlags: 0
@@ -4551,7 +4563,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3082\u3046\u4E00\u5EA6"
+  m_text: "\u3082\u3046\u4E00\u5EA6\u904A\u3076"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c62db1d54bd2b8f4cbc5af8293790fc5, type: 2}
   m_sharedMaterial: {fileID: 1764616735808686575, guid: c62db1d54bd2b8f4cbc5af8293790fc5, type: 2}

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStartController : MonoBehaviour
 {
     [SerializeField] private Ball ball;
     [SerializeField] private TextMeshProUGUI countdown;
-    [SerializeField] private GameObject oneMorePlayButton;
+    [SerializeField] private GameObject retryBtn;
 
     private bool hasShownClear = false;
 
@@ -55,12 +56,24 @@ public class GameStartController : MonoBehaviour
             countdown.gameObject.SetActive(true);
 
             // もう一度遊ぶボタンの表示
-            oneMorePlayButton.SetActive(true);
+            retryBtn.SetActive(true);
 
             if (ball != null)
                 ball.StopBall();
 
         }
+    }
+
+    // 「もう一度遊ぶ」ボタン押下処理
+    public void OnClickRetry()
+    {
+        // クリアフラグなどをデフォルトに戻す
+        GameManager.Instance.ResetGameState();
+
+        // ブロック復活、ボールデフォルト配置などの処理
+        // 今回は、シーンを再ロードして対応する
+        var sceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(sceneName);
     }
 
 

@@ -7,7 +7,6 @@ public class Block : MonoBehaviour
     [Range(0f, 1f)]
     [SerializeField] private float dropChance = 0.2f; // 20% でドロップ
 
-
     private void Start()
     {
         GameManager.Instance.RegisterBlock();
@@ -27,7 +26,4 @@ public class Block : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-
-
 }
